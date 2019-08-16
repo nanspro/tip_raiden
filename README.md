@@ -29,6 +29,8 @@ Running this script/bot will listen to your tweets and respond accordingly. Let'
 This will add @user to your list of subscriptions with his ethereum address. @user and his address must be written together separated by a single space.
 Your bot will create a channel to that ethereum address with your current set token_address and will reply back to your tweet with the response.
 
+
+
 ### Adding a new payment method
 Suppose you want to tip someone using another kind of token. Just register that token to your node by
 ```
@@ -36,9 +38,40 @@ Suppose you want to tip someone using another kind of token. Just register that 
 ```
 Token_Addr should follow "add" or "register" after space.
 
+
+
 ### Paying to the user/service provider
 You can tip anyone for their particular tweet by replying to that tweet with a particular message
 ```
 @tip_raiden <amount> <token_addr>
 ```
 amount is an integer and should be less than your total token ammount. You must have a channel where your partner is this user with your current token_address. Bot will send the amount to the user in the background and on success will let you know by replying back on your tweet with the response.
+
+
+
+### Increasing the collateral for a subscription
+If you want to increase the deposit with a specific user on a specific token network then your bot can do that.
+Simply tweet
+```
+@tip_raiden increase ... <User> <Final Deposit Amount> <Token_Addr>
+```
+
+Remember, you have to specify the total deposit amount in the tweet which will be the sum of current deposited amount and how much you want to increase.
+
+
+
+### Withdrawing collateral for a subscription
+If you want to withdraw some of the deposit with a specific user on a specific token network then your bot can do that.
+Simply tweet
+```
+@tip_raiden decrease/withdraw ... <User> <Final Deposit Amount> <Token_Addr>
+```
+
+Remember, you have to specify the total deposit amount in the tweet which will be the sum of current deposited amount and how much you want to increase.
+
+
+### Closing subscription
+You can close your subscription with anyone at any time.
+```
+@tip_raiden close/withdraw <User> <Token_Addr>
+```

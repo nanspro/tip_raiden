@@ -104,6 +104,83 @@ def sync(api, since_id):
                             status="Please register for the given token address first",
                             in_reply_to_status_id=tweet.id,
                         )
+
+                elif any(keyword in tweet.text.lower() for keyword in ["increase"]):
+                    logger.info(f"Bot Owner {tweet.user.name}")
+                    logger.info(f"Answering to tweet {tweet.text}")
+
+                    text = tweet.text.split(" ")
+                    text = text[1:]
+                    text = filtering(text)
+                    print(text)
+                    count = 0
+                    for item in text:
+                        print(item)
+                        if item in users.keys():
+                            amount = text[count + 1]
+                            partner = users[item]
+                            token_addr = text[count + 2]
+                            break
+                        count = count + 1
+                    url = URL + 'channels/' + token_addr + '/' + partner
+                    print(url)
+                    x = requests.patch(url, headers={ 'Content-Type': 'application/json', }, json={ 'total_deposit': amount, })
+                    print(x)
+                    api.update_status(
+                        status="You've deposited " + str(amount) + " tokens for the channel",
+                        in_reply_to_status_id=tweet.id,
+                    )
+                    
+                elif any(keyword in tweet.text.lower() for keyword in ["decrease", "withdraw"]):
+                    logger.info(f"Bot Owner {tweet.user.name}")
+                    logger.info(f"Answering to tweet {tweet.text}")
+
+                    text = tweet.text.split(" ")
+                    text = text[1:]
+                    text = filtering(text)
+                    print(text)
+                    count = 0
+                    for item in text:
+                        print(item)
+                        if item in users.keys():
+                            amount = text[count + 1]
+                            partner = users[item]
+                            token_addr = text[count + 2]
+                            break
+                        count = count + 1
+                    url = URL + 'channels/' + token_addr + '/' + partner
+                    print(url)
+                    x = requests.patch(url, headers={ 'Content-Type': 'application/json', }, json={ 'total_withdraw': amount, })
+                    print(x)
+                    api.update_status(
+                        status="You've withdrawn " + str(amount) + " tokens from the channel",
+                        in_reply_to_status_id=tweet.id,
+                    )
+
+                elif any(keyword in tweet.text.lower() for keyword in ["close", "unsubscribe"]):
+                    logger.info(f"Bot Owner {tweet.user.name}")
+                    logger.info(f"Answering to tweet {tweet.text}")
+
+                    text = tweet.text.split(" ")
+                    text = text[1:]
+                    text = filtering(text)
+                    print(text)
+                    count = 0
+                    for item in text:
+                        print(item)
+                        if item in users.keys():
+                            partner = users[item]
+                            token_addr = text[count + 1]
+                            break
+                        count = count + 1
+                    url = URL + 'channels/' + token_addr + '/' + partner
+                    print(url)
+                    x = requests.patch(url, headers={ 'Content-Type': 'application/json', }, json={ 'state': 'closed', })
+                    print(x)
+                    api.update_status(
+                        status="You've closed the connection with this channel",
+                        in_reply_to_status_id=tweet.id,
+                    )
         else:
             if (tweet.text.lower().split()[1] == "@tip_raiden"):
                 print(tweet.text.lower().split()[1])
