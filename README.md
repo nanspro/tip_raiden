@@ -69,9 +69,18 @@ Simply tweet
 
 Remember, you have to specify the total deposit amount in the tweet which will be the sum of current deposited amount and how much you want to increase.
 
+*Note: Only works for api version above 0.100.3*
+
 
 ### Closing subscription
 You can close your subscription with anyone at any time.
 ```
 @tip_raiden close/withdraw <User> <Token_Addr>
 ```
+
+
+## Work that needs to be done
+This bot was created within 5 days during the **Grow Ethereum** hackathon and so to get this into production, a little more work needs to be done.
+1. I am using my own account as a bot and user for now. Ideally a new twitter account should be created for the bot which will be controled by the user.
+2. Needs better error handling
+3. Methods can be implemented which will let user know about his tokens and unsettled channels. Although user can directly use raiden ui to look for these params but still implementing some methods will be a good idea.
